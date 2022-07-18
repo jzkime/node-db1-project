@@ -23,18 +23,16 @@ router.post('/', checkAccountPayload, checkAccountNameUnique, async (req, res, n
   }
 })
 
-router.put('/:id', checkAccountPayload, (req, res, next) => {
+router.put('/:id', checkAccountId, checkAccountPayload, (req, res, next) => {
   accMod.updateById(req.params.id, req.pl)
     .then(pl => res.json(pl))
     .catch(next);
 });
 
-router.delete('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
+router.delete('/:id', checkAccountId, (req, res, next) => {
+    accMod.deleteById(req.params.id)
+      .then(() => res.send())
+      .catch(next)
 })
-
-// router.use((err, req, res, next) => { // eslint-disable-line
-//   // DO YOUR MAGIC
-// })
 
 module.exports = router;
